@@ -133,7 +133,7 @@ class regisForm{
 	}
 	
 }
-public class registartion{
+public class registration{
     public static void main(String[] args) {
         regisForm r = new regisForm();
     }
