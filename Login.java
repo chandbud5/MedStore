@@ -1,14 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Login{
     public static void main(String[] args) {
-        Form f = new Form();
+        LoginForm f = new LoginForm();
     }
 }
 
-class Form{
-    public Form(){
+class LoginForm{
+    public LoginForm(){
 
         JFrame frame = new JFrame();
         JLabel l1 = new JLabel("Login to your MedStore Account", 0);
@@ -17,6 +19,7 @@ class Form{
         JTextField t1 = new JTextField(40);
         JTextField t2 = new JTextField(40);
         JButton submit = new JButton("Submit");
+        JButton home = new JButton("Return to Home");
         JLabel m = new JLabel("Don't have account? Create One");
         JButton reg = new JButton("Register");
 
@@ -29,14 +32,23 @@ class Form{
         l3.setFont(new Font(l3.getName(), Font.PLAIN,16));
         m.setFont(new Font(m.getName(), Font.PLAIN,18));
 
-        jp1.add(l1, BorderLayout.NORTH);
+        home.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new View();
+                frame.dispose();
+            }
+        });
+
+        jp1.add(l1, BorderLayout.PAGE_START);
         jp1.add(l2, BorderLayout.LINE_START);
         jp1.add(t1, BorderLayout.LINE_END);
 
         jp2.add(l3, BorderLayout.LINE_START);
         jp2.add(t2, BorderLayout.LINE_END);
         jp2.add(submit, BorderLayout.SOUTH);
-        
+
+        jp3.add(home, BorderLayout.PAGE_END);
         jp3.add(m, BorderLayout.LINE_START);
         jp3.add(reg, BorderLayout.LINE_END);
 
@@ -47,7 +59,7 @@ class Form{
         frame.setTitle("Login Form");
         frame.setResizable(false);
         frame.setVisible(true);
-        frame.setBounds(100, 25, 960, 700);
+        frame.setBounds(100, 25, 960, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }

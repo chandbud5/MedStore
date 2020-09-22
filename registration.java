@@ -127,7 +127,7 @@ class regisForm{
         c.add(reset);
 
 
-        frame.setBounds(100, 25, 960, 700);
+        frame.setBounds(100, 25, 960, 600);
         frame.setVisible(true);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
