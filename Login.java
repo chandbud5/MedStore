@@ -1,10 +1,8 @@
 import javax.swing.*;
-import javax.swing.text.*;
-import java.io.*;
-import java.util.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 
 public class Login{
     public static void main(String[] args) {
@@ -13,77 +11,64 @@ public class Login{
 }
 
 class LoginForm{
-
-	File userdata;
-    public LoginForm(){
+    public LoginForm() {
 
         JFrame frame = new JFrame();
         JLabel l1 = new JLabel("Login to your MedStore Account", 0);
         JLabel l2 = new JLabel("UserName", 0);
         JLabel l3 = new JLabel("Password", 0);
+        JLabel msg = new JLabel("Incorrect Credentials");
         JTextField t1 = new JTextField(40);
-        JTextField t2 = new JTextField(40);
+        JPasswordField t2 = new JPasswordField(40);
         JButton submit = new JButton("Submit");
         JButton home = new JButton("Return to Home");
         JLabel m = new JLabel("Don't have account? Create One");
         JButton reg = new JButton("Register");
 
+        msg.setVisible(false);
+
         JPanel jp1 = new JPanel(new BorderLayout(5, 20));
         JPanel jp2 = new JPanel(new BorderLayout(10, 20));
         JPanel jp3 = new JPanel(new BorderLayout(5, 20));
 
-        l1.setFont(new Font(l1.getName(), Font.PLAIN,20));
-        l2.setFont(new Font(l2.getName(), Font.PLAIN,16));
-        l3.setFont(new Font(l3.getName(), Font.PLAIN,16));
-        m.setFont(new Font(m.getName(), Font.PLAIN,18));
+        l1.setFont(new Font(l1.getName(), Font.PLAIN, 20));
+        l2.setFont(new Font(l2.getName(), Font.PLAIN, 16));
+        l3.setFont(new Font(l3.getName(), Font.PLAIN, 16));
+        m.setFont(new Font(m.getName(), Font.PLAIN, 18));
 
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-            	File inputFile = new File("C:\\MedStore\\registration.txt");
-                
-                String userNameInput = t1.getText();
-                String passwordInput = t2.getText();
-                
-                try {
-                       Scanner in = new Scanner(new File("C:\\MedStore\\registration.txt"));
-                       while (in.hasNextLine())
-                       {
-                         String s = in.nextLine(); 
-                         String[] sArray = s.split(",");
-                         
-                         System.out.println(sArray[0]); 
-                         System.out.println(sArray[1]);
 
-                         
-                         if (userNameInput.equals(sArray[0]) && passwordInput.equals(sArray[1]))
-                         {
-                           JOptionPane.showMessageDialog(null,"Login Successful", "Success",JOptionPane.INFORMATION_MESSAGE);
-                           new View();
-                           frame.dispose();
-                           
-                         }
-                         
-                       else
-                         {
-                           JOptionPane.showMessageDialog(null,"Invalid Username / Password ", "Error",JOptionPane.ERROR_MESSAGE);
-                         }
-                       }
-                       
-                       in.close();
-                }   
-                    catch (FileNotFoundException e) {
-                       JOptionPane.showMessageDialog(null,
-                               "User Database Not Found", "Error",
-                               JOptionPane.ERROR_MESSAGE);
-                   }
-            }
-        });
-               
-        
-            public void actionPerformed(ActionEvent e) {
-                new View();
-                frame.dispose();
+                String userNameInput = t1.getText();
+                String passwordInput = new String(t2.getPassword());
+                String s, pass;
+
+                try {
+                    File f = new File("registration.txt");
+                    FileReader fr = new FileReader(f);
+                    BufferedReader br = new BufferedReader(fr);
+                    s = br.readLine();
+                    pass = br.readLine();
+                    while (s != null || pass != null) {
+                        if (s.equals(userNameInput) && pass.equals(passwordInput)) {
+                            View.auth = true;
+                            break;
+                        }
+                        s = br.readLine();
+                        pass = br.readLine();
+                    }
+                    br.close();
+
+                    if (!View.auth) {
+                        msg.setVisible(true);
+                    } else {
+                        new View();
+                        frame.dispose();
+                    }
+                } catch (IOException e) {
+                    System.out.println(e);
+                }
             }
         });
 
@@ -119,10 +104,12 @@ class LoginForm{
         frame.add(jp1);
         frame.add(jp2);
         frame.add(jp3);
+        frame.add(msg);
         frame.setTitle("Login Form");
         frame.setResizable(false);
         frame.setVisible(true);
-        frame.setBounds(100, 25, 960, 600);
+        frame.setBounds(100, 25, 700, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
 }

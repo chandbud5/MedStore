@@ -1,6 +1,4 @@
 import javax.swing.*;
-import javax.swing.text.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -153,7 +151,7 @@ class carts{
 class CheckOut extends JFrame{
     CheckOut(){
         JFrame frame = new JFrame("Thank You");
-        JLabel l = new JLabel("Thank You! your Order is placed. Our Drones will deliver your things Soon");
+        JLabel l = new JLabel("Thank You! your Order is placed. Our Drones will deliver your order Soon");
         JButton b = new JButton("Return Home");
 
         b.addActionListener(new ActionListener() {

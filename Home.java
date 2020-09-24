@@ -137,8 +137,6 @@ class View{
             public void actionPerformed(ActionEvent e) {
                 products.add(p5.getText());
                 price.add(pr5.getText());
-                System.out.println(products);
-                System.out.println(price);
             }
         });
         JPanel jp8 = new JPanel(new BorderLayout(5,5));

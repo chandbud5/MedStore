@@ -4,51 +4,45 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
-
 class regisForm{
     JFrame frame=new JFrame("Registration Form");
     Container c=frame.getContentPane();
-    JLabel lhead,lname,lemail,lmobile,ldob,lgender,laddress,lpass,lstate;
+    JLabel lhead,lname,lemail,lmobile,ldob,lgender,laddress,lpass,lstate,msg,log;
     JTextField tname,temail,tmobile,taddress;
     JPasswordField pass;
     JRadioButton r1,r2;
     ButtonGroup gender = new ButtonGroup();
     JComboBox d,m,y,s;
     JCheckBox term;
-    JButton submit,reset;
-    File f=new File("C:\\MedStore");
-    void createfolder(){
-    	if(!f.exists()){
-    		f.mkdirs();
-    	}
-    }
+    JButton submit,reset,login,home;
+
     void readfile()
     {
-    try {
-		FileReader fr=new FileReader(f+"\\registration.txt");
-	     }
-    catch (FileNotFoundException e) {
-		try {
-			FileWriter fw=new FileWriter(f+"\\t");
-		    }
-		catch (IOException e1) {
-		    }
-	    }
+        try {
+            FileReader fr=new FileReader("registration.txt");
+        }
+        catch (FileNotFoundException e) {
+            try {
+                FileWriter fw=new FileWriter("\\t");
+            }
+            catch (IOException e1) {
+            }
+        }
     }
     void adddata()
     {
-    	try {
-    		File g=new File(f+"\\registration.txt");
-			FileWriter dw=new FileWriter(g);
-			String passtext=new String(pass.getPassword());
-			dw.write(tname.getText()+","+passtext);
-			dw.write("\r\n");
-			dw.close();
-		 } 
-    
-		 catch (IOException e) {
-			System.out.println("Error");
-		}
+        try {
+            File g=new File("registration.txt");
+            FileWriter dw=new FileWriter(g, true);
+            String passtext=new String(pass.getPassword());
+            dw.write(tname.getText()+"\n"+passtext);
+            dw.write("\n");
+            dw.close();
+        }
+
+        catch (IOException e) {
+            System.out.println("Error");
+        }
     }
 
     regisForm()
@@ -159,45 +153,73 @@ class regisForm{
         submit=new JButton("SUBMIT");
         submit.setBounds(300, 490, 80, 25);
         c.add(submit);
-       
+
+        msg = new JLabel("Accept the Terms and Conditions");
+        msg.setBounds(300, 520, 200, 30);
+        msg.setVisible(false);
+        c.add(msg);
+
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	 if(term.isSelected()){
-              createfolder();
-              readfile();
-              adddata();
-              new LoginForm();
-              frame.dispose();
-            	 }
+                if(term.isSelected()){
+                    readfile();
+                    adddata();
+                    View.auth = true;
+                    new View();
+                    frame.dispose();
+                }
+                else{
+                    msg.setVisible(true);
+                }
             }
         });
- 
-        
+
+
         reset=new JButton("RESET");
         reset.setBounds(400, 490, 80, 25);
         c.add(reset);
         reset.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-              new regisForm();
-              frame.dispose();
-            	 }
+                new regisForm();
+                frame.dispose();
             }
-        );
+        });
 
+        log = new JLabel("Already have Account?");
+        log.setBounds(650, 250, 200, 25);
+        c.add(log);
 
-        reset=new JButton("RESET");
-        reset.setBounds(400, 490, 80, 25);
-        c.add(reset);
+        login = new JButton("LOGIN");
+        login.setBounds(650, 280, 80, 25);
+        c.add(login);
 
+        login.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new LoginForm();
+                frame.dispose();
+            }
+        });
+
+        home = new JButton("Return to Home");
+        home.setBounds(650, 200, 200, 25);
+        c.add(home);
+
+        home.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new View();
+                frame.dispose();
+            }
+        });
 
         frame.setBounds(100, 25, 960, 600);
         frame.setVisible(true);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
 }
 public class registration{
     public static void main(String[] args) {
