@@ -13,6 +13,7 @@ public class Login{
 }
 
 class LoginForm{
+
 	File userdata;
     public LoginForm(){
 
@@ -80,6 +81,11 @@ class LoginForm{
         });
                
         
+            public void actionPerformed(ActionEvent e) {
+                new View();
+                frame.dispose();
+            }
+        });
 
         reg.addActionListener(new ActionListener() {
             @Override

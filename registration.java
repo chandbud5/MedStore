@@ -187,6 +187,10 @@ class regisForm{
         );
 
 
+        reset=new JButton("RESET");
+        reset.setBounds(400, 490, 80, 25);
+        c.add(reset);
+
 
         frame.setBounds(100, 25, 960, 600);
         frame.setVisible(true);
