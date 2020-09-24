@@ -1,4 +1,7 @@
 import javax.swing.*;
+import javax.swing.text.*;
+import java.io.*;
+import java.util.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +13,8 @@ public class Login{
 }
 
 class LoginForm{
+
+	File userdata;
     public LoginForm(){
 
         JFrame frame = new JFrame();
@@ -34,6 +39,48 @@ class LoginForm{
 
         submit.addActionListener(new ActionListener() {
             @Override
+            public void actionPerformed(ActionEvent event) {
+            	File inputFile = new File("C:\\MedStore\\registration.txt");
+                
+                String userNameInput = t1.getText();
+                String passwordInput = t2.getText();
+                
+                try {
+                       Scanner in = new Scanner(new File("C:\\MedStore\\registration.txt"));
+                       while (in.hasNextLine())
+                       {
+                         String s = in.nextLine(); 
+                         String[] sArray = s.split(",");
+                         
+                         System.out.println(sArray[0]); 
+                         System.out.println(sArray[1]);
+
+                         
+                         if (userNameInput.equals(sArray[0]) && passwordInput.equals(sArray[1]))
+                         {
+                           JOptionPane.showMessageDialog(null,"Login Successful", "Success",JOptionPane.INFORMATION_MESSAGE);
+                           new View();
+                           frame.dispose();
+                           
+                         }
+                         
+                       else
+                         {
+                           JOptionPane.showMessageDialog(null,"Invalid Username / Password ", "Error",JOptionPane.ERROR_MESSAGE);
+                         }
+                       }
+                       
+                       in.close();
+                }   
+                    catch (FileNotFoundException e) {
+                       JOptionPane.showMessageDialog(null,
+                               "User Database Not Found", "Error",
+                               JOptionPane.ERROR_MESSAGE);
+                   }
+            }
+        });
+               
+        
             public void actionPerformed(ActionEvent e) {
                 new View();
                 frame.dispose();

@@ -1,5 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+
 
 class regisForm{
     JFrame frame=new JFrame("Registration Form");
@@ -12,6 +16,40 @@ class regisForm{
     JComboBox d,m,y,s;
     JCheckBox term;
     JButton submit,reset;
+    File f=new File("C:\\MedStore");
+    void createfolder(){
+    	if(!f.exists()){
+    		f.mkdirs();
+    	}
+    }
+    void readfile()
+    {
+    try {
+		FileReader fr=new FileReader(f+"\\registration.txt");
+	     }
+    catch (FileNotFoundException e) {
+		try {
+			FileWriter fw=new FileWriter(f+"\\t");
+		    }
+		catch (IOException e1) {
+		    }
+	    }
+    }
+    void adddata()
+    {
+    	try {
+    		File g=new File(f+"\\registration.txt");
+			FileWriter dw=new FileWriter(g);
+			String passtext=new String(pass.getPassword());
+			dw.write(tname.getText()+","+passtext);
+			dw.write("\r\n");
+			dw.close();
+		 } 
+    
+		 catch (IOException e) {
+			System.out.println("Error");
+		}
+    }
 
     regisForm()
     {
@@ -121,6 +159,33 @@ class regisForm{
         submit=new JButton("SUBMIT");
         submit.setBounds(300, 490, 80, 25);
         c.add(submit);
+       
+        submit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	 if(term.isSelected()){
+              createfolder();
+              readfile();
+              adddata();
+              new LoginForm();
+              frame.dispose();
+            	 }
+            }
+        });
+ 
+        
+        reset=new JButton("RESET");
+        reset.setBounds(400, 490, 80, 25);
+        c.add(reset);
+        reset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              new regisForm();
+              frame.dispose();
+            	 }
+            }
+        );
+
 
         reset=new JButton("RESET");
         reset.setBounds(400, 490, 80, 25);
