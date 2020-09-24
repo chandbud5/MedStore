@@ -32,6 +32,22 @@ class LoginForm{
         l3.setFont(new Font(l3.getName(), Font.PLAIN,16));
         m.setFont(new Font(m.getName(), Font.PLAIN,18));
 
+        submit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new View();
+                frame.dispose();
+            }
+        });
+
+        reg.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new regisForm();
+                frame.dispose();
+            }
+        });
+
         home.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
